@@ -1,0 +1,2250 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "统一没有特殊说明的情况下规范说明：\u003cbr\u003e 1. 没有特殊说明的情况下，返回数据格式均为`json` \u003cbr\u003e 2. 返回 json 最外层均包含`code`和`message`字段 \u003cbr\u003e 3. http code [200]: 正常；[400]: 请求参数错误；[401]: 当前请求无token或token过期；[500]: 服务器异常错误；",
+        "title": "shopping-goods 商品服务接口文档",
+        "contact": {},
+        "license": {
+            "name": "mission"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/shopping/v1",
+    "paths": {
+        "/goods/ads/all": {
+            "get": {
+                "description": "查询广告列表 全部",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "广告"
+                ],
+                "summary": "查询广告列表 全部",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "查询类型 1夺宝，2拼购，3用户中心",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/val.GetAdResp"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/browsing-history/add": {
+            "post": {
+                "description": "添加场次浏览记录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品浏览记录"
+                ],
+                "summary": "添加场次浏览记录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "添加场次浏览记录",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/val.AddGoodsBrowsingHistoryReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/httper.RespBody"
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/browsing-history/page": {
+            "get": {
+                "description": "查询场次浏览记录分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品浏览记录"
+                ],
+                "summary": "查询场次浏览记录分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品夺宝场次",
+                        "name": "treasure_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetGoodsBrowsingHistoryWithPageResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/buy-record/page": {
+            "get": {
+                "description": "查询用户购买记录 分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户购买记录"
+                ],
+                "summary": "查询用户购买记录 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "查询类型 1夺宝全部，2夺宝中奖，3拼购全部，4拼购中奖",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/pager.PageModel"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/buy-record/statistics": {
+            "get": {
+                "description": "查询用户购买记录统计信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户购买记录"
+                ],
+                "summary": "查询用户购买记录统计信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.GetUserBuyRecordStatisticsResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/group-purchase-buy-record/page": {
+            "get": {
+                "description": "查询商品拼购购买记录 分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品拼购"
+                ],
+                "summary": "查询商品拼购购买记录 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品拼购场次",
+                        "name": "group_purchase_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetOrderGroupPurchasesBuyRecordResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/group-purchase-processing/page": {
+            "get": {
+                "description": "查询商品拼购池进行中的列表 分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品拼购"
+                ],
+                "summary": "查询商品拼购池进行中的列表 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "拼购人数",
+                        "name": "purchaser_num",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetGoodsGroupPurchasePoolProcessingWithPageResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/group-purchase/detail": {
+            "get": {
+                "description": "查询商品拼购池详情信息 单个",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品拼购"
+                ],
+                "summary": "查询商品拼购池详情信息 单个",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品拼购场次",
+                        "name": "group_purchase_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.GetGoodsGroupPurchasePoolDetailResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/group-purchase/info": {
+            "get": {
+                "description": "查询商品拼购池 单个",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品拼购"
+                ],
+                "summary": "查询商品拼购池 单个",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品拼购场次",
+                        "name": "group_purchase_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.GetGoodsGroupPurchasePoolResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/group-purchase/label": {
+            "get": {
+                "description": "查询商品拼购池标签",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品拼购"
+                ],
+                "summary": "查询商品拼购池标签",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.GetGoodsGroupPurchasePoolLabelResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/group-purchase/lucky-info": {
+            "get": {
+                "description": "查询商品拼购中奖信息 单个",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品拼购"
+                ],
+                "summary": "查询商品拼购中奖信息 单个",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品拼购场次",
+                        "name": "group_purchase_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.GetLotteryTreasureLuckyRecordResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/group-purchase/user-buy-record": {
+            "get": {
+                "description": "查询商品拼购当前用户购买记录 分页",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品拼购"
+                ],
+                "summary": "查询商品拼购当前用户购买记录 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品拼购场次",
+                        "name": "group_purchase_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetLotteryGroupPurchaseRecordResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/latest-processing-issue-no": {
+            "get": {
+                "description": "商品池最新进行中的期号",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品池"
+                ],
+                "summary": "商品池最新进行中的期号",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "期号",
+                        "name": "issue_no",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "类型(1:夺宝;2:拼购)",
+                        "name": "issue_type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.GetGoodsLatestProcessingIssueNoResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/share/page": {
+            "get": {
+                "description": "查询晒单分享列表 分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "晒单分享"
+                ],
+                "summary": "查询晒单分享列表 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetShareResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/share/show-page": {
+            "get": {
+                "description": "查询晒单分享轮播列表 分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "晒单分享"
+                ],
+                "summary": "查询晒单分享轮播列表 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "类型(1:夺宝;2:拼购)",
+                        "name": "issue_type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetSharesShowWithPageResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/treasure-buy-record/page": {
+            "get": {
+                "description": "查询商品夺宝购买记录 分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品夺宝"
+                ],
+                "summary": "查询商品夺宝购买记录 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品夺宝场次",
+                        "name": "treasure_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetGoodsTreasurePoolBuyRecordResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/treasure-ended/page": {
+            "get": {
+                "description": "查询商品夺宝已结束列表 分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品夺宝"
+                ],
+                "summary": "查询商品夺宝已结束列表 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GoodsTreasurePoolEndedWithPageResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/treasure-processing/page": {
+            "get": {
+                "description": "查询商品夺宝进行中的列表 分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品夺宝"
+                ],
+                "summary": "查询商品夺宝进行中的列表 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetGoodsTreasurePoolProcessingWithPageResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/treasure/detail": {
+            "get": {
+                "description": "查询商品夺宝详情信息 单个",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品夺宝"
+                ],
+                "summary": "查询商品夺宝详情信息 单个",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品夺宝场次",
+                        "name": "treasure_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.GetGoodsTreasurePoolDetailResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/treasure/info": {
+            "get": {
+                "description": "查询商品夺宝信息 单个",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品夺宝"
+                ],
+                "summary": "查询商品夺宝信息 单个",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品夺宝场次",
+                        "name": "treasure_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.GetGoodsTreasurePoolResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/treasure/lucky-info": {
+            "get": {
+                "description": "查询商品夺宝中奖信息 单个",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品夺宝"
+                ],
+                "summary": "查询商品夺宝中奖信息 单个",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品夺宝场次",
+                        "name": "treasure_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.GetLotteryTreasureLuckyRecordResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/treasure/user-buy-record": {
+            "get": {
+                "description": "查询商品夺宝当前用户购买记录 分页",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "商品夺宝"
+                ],
+                "summary": "查询商品夺宝当前用户购买记录 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "商品夺宝场次",
+                        "name": "treasure_no",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetLotteryTreasureRecordResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/user-share/add": {
+            "post": {
+                "description": "新增晒单分享",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "晒单分享"
+                ],
+                "summary": "新增晒单分享",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "晒单分享",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/val.AddShareReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/httper.RespBody"
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/user-share/file-upload": {
+            "post": {
+                "description": "晒单分享上传图片",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "晒单分享"
+                ],
+                "summary": "晒单分享上传图片",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "图片文件",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/val.UploadImageResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/goods/user-share/page": {
+            "get": {
+                "description": "查询用户的晒单分享列表 分页",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "晒单分享"
+                ],
+                "summary": "查询用户的晒单分享列表 分页",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "access-token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码 默认为1",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页大小 默认为10",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/httper.RespBody"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/pager.PageModel"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "records": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/val.GetUserShareResp"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "httper.RespBody": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "状态码",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "内容"
+                },
+                "message": {
+                    "description": "描述",
+                    "type": "string"
+                }
+            }
+        },
+        "pager.PageModel": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer"
+                },
+                "page_size": {
+                    "type": "integer"
+                },
+                "records": {},
+                "total_pages": {
+                    "type": "integer"
+                },
+                "total_records": {
+                    "type": "integer"
+                }
+            }
+        },
+        "val.AddGoodsBrowsingHistoryReq": {
+            "type": "object",
+            "required": [
+                "treasure_no"
+            ],
+            "properties": {
+                "treasure_no": {
+                    "description": "夺宝场次",
+                    "type": "integer"
+                }
+            }
+        },
+        "val.AddShareReq": {
+            "type": "object",
+            "required": [
+                "content",
+                "img",
+                "issue_no",
+                "issue_type"
+            ],
+            "properties": {
+                "content": {
+                    "description": "分享内容",
+                    "type": "string",
+                    "maxLength": 500
+                },
+                "img": {
+                    "description": "分享图片",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "issue_no": {
+                    "description": "期号",
+                    "type": "integer"
+                },
+                "issue_type": {
+                    "description": "类型(1:夺宝;2:拼购)",
+                    "type": "integer",
+                    "enum": [
+                        1,
+                        2
+                    ]
+                }
+            }
+        },
+        "val.GetAdResp": {
+            "type": "object",
+            "properties": {
+                "href_url": {
+                    "description": "跳转地址",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
+                    "type": "integer"
+                },
+                "img_url": {
+                    "description": "图片地址",
+                    "type": "string"
+                },
+                "position_id": {
+                    "description": "广告位id",
+                    "type": "integer"
+                },
+                "rank": {
+                    "description": "排序",
+                    "type": "integer"
+                }
+            }
+        },
+        "val.GetGoodsBrowsingHistoryWithPageResp": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "description": "用户城市",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "head_image_url": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GetGoodsGroupPurchasePoolDetailResp": {
+            "type": "object",
+            "properties": {
+                "detail": {
+                    "description": "详情信息",
+                    "type": "string"
+                },
+                "group_purchase_no": {
+                    "description": "拼购场次",
+                    "type": "integer"
+                }
+            }
+        },
+        "val.GetGoodsGroupPurchasePoolLabelResp": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "拼购人数",
+                    "type": "integer"
+                },
+                "label": {
+                    "description": "拼购人数",
+                    "type": "integer"
+                },
+                "value": {
+                    "description": "拼购进行中的数量",
+                    "type": "integer"
+                }
+            }
+        },
+        "val.GetGoodsGroupPurchasePoolProcessingWithPageResp": {
+            "type": "object",
+            "properties": {
+                "cover_img": {
+                    "description": "商品封面图",
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "商品描述",
+                    "type": "string"
+                },
+                "group_purchase_no": {
+                    "description": "拼购场次",
+                    "type": "integer"
+                },
+                "head_image_urls": {
+                    "description": "已参与人头像",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/val.GoodsGroupPurchasePoolBuyer"
+                    }
+                },
+                "join_user_num": {
+                    "description": "已参与人数",
+                    "type": "integer"
+                },
+                "min_unit": {
+                    "description": "最小购买单位",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "商品名称",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "售价",
+                    "type": "number"
+                },
+                "purchaser_num": {
+                    "description": "拼购人数",
+                    "type": "integer"
+                },
+                "remain_unit": {
+                    "description": "当前库存",
+                    "type": "integer"
+                },
+                "total_unit": {
+                    "description": "总份数",
+                    "type": "integer"
+                },
+                "unit_price": {
+                    "description": "每份售价",
+                    "type": "number"
+                }
+            }
+        },
+        "val.GetGoodsGroupPurchasePoolResp": {
+            "type": "object",
+            "properties": {
+                "cover_img": {
+                    "description": "商品封面图",
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "商品描述",
+                    "type": "string"
+                },
+                "goods_img": {
+                    "description": "商品图片",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "group_purchase_no": {
+                    "description": "拼购场次",
+                    "type": "integer"
+                },
+                "lottery_start_at": {
+                    "description": "开奖时间",
+                    "type": "string"
+                },
+                "min_unit": {
+                    "description": "最小购买单位",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "商品名称",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "售价",
+                    "type": "number"
+                },
+                "purchaser_num": {
+                    "description": "拼购人数",
+                    "type": "integer"
+                },
+                "remain_unit": {
+                    "description": "当前库存",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "状态(1:未开始;2:进行中;3:结束但未开奖;4:已开奖)",
+                    "type": "integer"
+                },
+                "total_unit": {
+                    "description": "总份数",
+                    "type": "integer"
+                },
+                "unit_price": {
+                    "description": "每份售价",
+                    "type": "number"
+                }
+            }
+        },
+        "val.GetGoodsLatestProcessingIssueNoResp": {
+            "type": "object",
+            "properties": {
+                "issue_no": {
+                    "description": "期号",
+                    "type": "integer"
+                }
+            }
+        },
+        "val.GetGoodsTreasurePoolBuyRecordResp": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "description": "城市",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "head_image_url": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "treasure_no": {
+                    "description": "夺宝场次",
+                    "type": "integer"
+                },
+                "unit": {
+                    "description": "购买份数",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GetGoodsTreasurePoolDetailResp": {
+            "type": "object",
+            "properties": {
+                "detail": {
+                    "description": "详情",
+                    "type": "string"
+                },
+                "treasure_no": {
+                    "description": "夺宝场次",
+                    "type": "integer"
+                }
+            }
+        },
+        "val.GetGoodsTreasurePoolProcessingWithPageResp": {
+            "type": "object",
+            "properties": {
+                "cover_img": {
+                    "description": "商品封面图",
+                    "type": "string"
+                },
+                "lottery_start_at": {
+                    "description": "开奖时间",
+                    "type": "string"
+                },
+                "min_unit": {
+                    "description": "最小购买单位",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "商品名称",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "售价",
+                    "type": "number"
+                },
+                "remain_unit": {
+                    "description": "当前库存",
+                    "type": "integer"
+                },
+                "total_unit": {
+                    "description": "总份数",
+                    "type": "integer"
+                },
+                "treasure_no": {
+                    "description": "夺宝场次",
+                    "type": "integer"
+                },
+                "unit_price": {
+                    "description": "每份售价",
+                    "type": "number"
+                }
+            }
+        },
+        "val.GetGoodsTreasurePoolResp": {
+            "type": "object",
+            "properties": {
+                "cover_img": {
+                    "description": "商品封面图",
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "商品描述",
+                    "type": "string"
+                },
+                "goods_category_id": {
+                    "description": "商品分类",
+                    "type": "integer"
+                },
+                "goods_category_name": {
+                    "description": "商品分类名称",
+                    "type": "string"
+                },
+                "goods_img": {
+                    "description": "商品图片",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "lottery_start_at": {
+                    "description": "开奖时间",
+                    "type": "string"
+                },
+                "min_unit": {
+                    "description": "最小购买单位",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "商品名称",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "售价",
+                    "type": "number"
+                },
+                "remain_unit": {
+                    "description": "当前库存",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "状态(1:未开始;2:进行中;3:结束但未开奖;4:已开奖)",
+                    "type": "integer"
+                },
+                "total_unit": {
+                    "description": "总份数",
+                    "type": "integer"
+                },
+                "treasure_no": {
+                    "description": "夺宝场次",
+                    "type": "integer"
+                },
+                "unit_price": {
+                    "description": "每份售价",
+                    "type": "number"
+                }
+            }
+        },
+        "val.GetLotteryGroupPurchaseRecordResp": {
+            "type": "object",
+            "properties": {
+                "group_purchase_no": {
+                    "description": "拼购场次",
+                    "type": "integer"
+                },
+                "is_lucky": {
+                    "description": "是否中奖(1:否;2:是)",
+                    "type": "integer"
+                },
+                "lottery_no": {
+                    "description": "抽奖编号",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GetLotteryTreasureLuckyRecordResp": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "description": "用户城市",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "head_image_url": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "is_share": {
+                    "description": "是否分享(0:未分享;1:已分享)",
+                    "type": "integer"
+                },
+                "lottery_no": {
+                    "description": "抽奖编号",
+                    "type": "integer"
+                },
+                "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "treasure_no": {
+                    "description": "夺宝场次",
+                    "type": "integer"
+                },
+                "unit": {
+                    "description": "购买份数",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GetLotteryTreasureRecordResp": {
+            "type": "object",
+            "properties": {
+                "is_lucky": {
+                    "description": "是否中奖(1:否;2:是)",
+                    "type": "integer"
+                },
+                "lottery_no": {
+                    "description": "抽奖编号",
+                    "type": "integer"
+                },
+                "treasure_no": {
+                    "description": "夺宝场次",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GetOrderGroupPurchasesBuyRecordResp": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "description": "城市",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "group_purchase_no": {
+                    "description": "夺宝场次",
+                    "type": "integer"
+                },
+                "head_image_url": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "unit": {
+                    "description": "购买份数",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GetShareResp": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "description": "城市",
+                    "type": "string"
+                },
+                "content": {
+                    "description": "分享内容",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "head_image_url": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "img": {
+                    "description": "分享图片",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "issue_no": {
+                    "description": "期号",
+                    "type": "integer"
+                },
+                "issue_type": {
+                    "description": "类型(1:夺宝;2:拼购)",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GetSharesShowWithPageResp": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "head_image_url": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "issue_type": {
+                    "description": "类型(1:夺宝;2:拼购)",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GetUserBuyRecordStatisticsResp": {
+            "type": "object",
+            "properties": {
+                "lucky_num": {
+                    "description": "LuckyNum 中奖数",
+                    "type": "integer"
+                },
+                "total_num": {
+                    "description": "TotalNum 总数",
+                    "type": "integer"
+                }
+            }
+        },
+        "val.GetUserShareResp": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "分享内容",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "img": {
+                    "description": "分享图片",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "issue_no": {
+                    "description": "期号",
+                    "type": "integer"
+                },
+                "issue_type": {
+                    "description": "类型(1:夺宝;2:拼购)",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "审核状态(1:待审核;2:审核拒绝;3:审核通过)",
+                    "type": "integer"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GoodsGroupPurchasePoolBuyer": {
+            "type": "object",
+            "properties": {
+                "head_image_url": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                }
+            }
+        },
+        "val.GoodsTreasurePoolEndedWithPageResp": {
+            "type": "object",
+            "properties": {
+                "cover_img": {
+                    "description": "商品封面图",
+                    "type": "string"
+                },
+                "head_image_url": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "lottery_start_at": {
+                    "description": "开奖时间",
+                    "type": "string"
+                },
+                "min_unit": {
+                    "description": "最小购买单位",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "商品名称",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "price": {
+                    "description": "售价",
+                    "type": "number"
+                },
+                "status": {
+                    "description": "状态(1:未开始;2:进行中;3:结束但未开奖;4:已开奖)",
+                    "type": "integer"
+                },
+                "total_unit": {
+                    "description": "总份数",
+                    "type": "integer"
+                },
+                "treasure_no": {
+                    "description": "夺宝场次",
+                    "type": "integer"
+                },
+                "unit_price": {
+                    "description": "每份售价",
+                    "type": "number"
+                },
+                "user_id": {
+                    "description": "用户ID",
+                    "type": "string"
+                }
+            }
+        },
+        "val.UploadImageResp": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "description": "图片存储 url 地址",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

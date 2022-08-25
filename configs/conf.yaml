@@ -1,0 +1,34 @@
+# 基础配置
+Base:
+  # web 服务端口
+  WebPort: "9090"
+  # rpc 服务端口
+  PRCPort: "8084"
+  # 注册中心地址
+  RegisterAddress: "127.0.0.1:8500"
+  # 服务地址
+  ServerAddress: "127.0.0.1"
+
+# 日志配置
+Logger:
+  # 日志存放路径，当前目录的log文件夹
+  Path: "/tmp"
+  # 日志打印等级，[debug, info, warn, err, off]
+  Level: "debug"
+  # 最大存放时间，7天，超过7天的日志会删除
+  MaxAge: 7
+  # 日志分割时间，24小时，日志以1天为单位分割，一天一个文件
+  RotationTime: 24
+  # 是否启用控制台输出
+  StdOut: true
+
+# 数据仓库配置
+Repo:
+  # mysql连接
+  Connection: ""
+
+# redis连接
+Redis:
+  Connection: ""
+  Username: ""
+  Password: ""

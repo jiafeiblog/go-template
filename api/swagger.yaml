@@ -1,0 +1,1433 @@
+basePath: /api/shopping/v1
+definitions:
+  httper.RespBody:
+    properties:
+      code:
+        description: 状态码
+        type: integer
+      data:
+        description: 内容
+      message:
+        description: 描述
+        type: string
+    type: object
+  pager.PageModel:
+    properties:
+      page:
+        type: integer
+      page_size:
+        type: integer
+      records: {}
+      total_pages:
+        type: integer
+      total_records:
+        type: integer
+    type: object
+  val.AddGoodsBrowsingHistoryReq:
+    properties:
+      treasure_no:
+        description: 夺宝场次
+        type: integer
+    required:
+    - treasure_no
+    type: object
+  val.AddShareReq:
+    properties:
+      content:
+        description: 分享内容
+        maxLength: 500
+        type: string
+      img:
+        description: 分享图片
+        items:
+          type: string
+        type: array
+      issue_no:
+        description: 期号
+        type: integer
+      issue_type:
+        description: 类型(1:夺宝;2:拼购)
+        enum:
+        - 1
+        - 2
+        type: integer
+    required:
+    - content
+    - img
+    - issue_no
+    - issue_type
+    type: object
+  val.GetAdResp:
+    properties:
+      href_url:
+        description: 跳转地址
+        type: string
+      id:
+        description: id
+        type: integer
+      img_url:
+        description: 图片地址
+        type: string
+      position_id:
+        description: 广告位id
+        type: integer
+      rank:
+        description: 排序
+        type: integer
+    type: object
+  val.GetGoodsBrowsingHistoryWithPageResp:
+    properties:
+      city:
+        description: 用户城市
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      head_image_url:
+        description: 用户头像
+        type: string
+      nickname:
+        description: 用户昵称
+        type: string
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.GetGoodsGroupPurchasePoolDetailResp:
+    properties:
+      detail:
+        description: 详情信息
+        type: string
+      group_purchase_no:
+        description: 拼购场次
+        type: integer
+    type: object
+  val.GetGoodsGroupPurchasePoolLabelResp:
+    properties:
+      id:
+        description: 拼购人数
+        type: integer
+      label:
+        description: 拼购人数
+        type: integer
+      value:
+        description: 拼购进行中的数量
+        type: integer
+    type: object
+  val.GetGoodsGroupPurchasePoolProcessingWithPageResp:
+    properties:
+      cover_img:
+        description: 商品封面图
+        type: string
+      desc:
+        description: 商品描述
+        type: string
+      group_purchase_no:
+        description: 拼购场次
+        type: integer
+      head_image_urls:
+        description: 已参与人头像
+        items:
+          $ref: '#/definitions/val.GoodsGroupPurchasePoolBuyer'
+        type: array
+      join_user_num:
+        description: 已参与人数
+        type: integer
+      min_unit:
+        description: 最小购买单位
+        type: integer
+      name:
+        description: 商品名称
+        type: string
+      price:
+        description: 售价
+        type: number
+      purchaser_num:
+        description: 拼购人数
+        type: integer
+      remain_unit:
+        description: 当前库存
+        type: integer
+      total_unit:
+        description: 总份数
+        type: integer
+      unit_price:
+        description: 每份售价
+        type: number
+    type: object
+  val.GetGoodsGroupPurchasePoolResp:
+    properties:
+      cover_img:
+        description: 商品封面图
+        type: string
+      desc:
+        description: 商品描述
+        type: string
+      goods_img:
+        description: 商品图片
+        items:
+          type: string
+        type: array
+      group_purchase_no:
+        description: 拼购场次
+        type: integer
+      lottery_start_at:
+        description: 开奖时间
+        type: string
+      min_unit:
+        description: 最小购买单位
+        type: integer
+      name:
+        description: 商品名称
+        type: string
+      price:
+        description: 售价
+        type: number
+      purchaser_num:
+        description: 拼购人数
+        type: integer
+      remain_unit:
+        description: 当前库存
+        type: integer
+      status:
+        description: 状态(1:未开始;2:进行中;3:结束但未开奖;4:已开奖)
+        type: integer
+      total_unit:
+        description: 总份数
+        type: integer
+      unit_price:
+        description: 每份售价
+        type: number
+    type: object
+  val.GetGoodsLatestProcessingIssueNoResp:
+    properties:
+      issue_no:
+        description: 期号
+        type: integer
+    type: object
+  val.GetGoodsTreasurePoolBuyRecordResp:
+    properties:
+      city:
+        description: 城市
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      head_image_url:
+        description: 用户头像
+        type: string
+      nickname:
+        description: 用户昵称
+        type: string
+      treasure_no:
+        description: 夺宝场次
+        type: integer
+      unit:
+        description: 购买份数
+        type: integer
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.GetGoodsTreasurePoolDetailResp:
+    properties:
+      detail:
+        description: 详情
+        type: string
+      treasure_no:
+        description: 夺宝场次
+        type: integer
+    type: object
+  val.GetGoodsTreasurePoolProcessingWithPageResp:
+    properties:
+      cover_img:
+        description: 商品封面图
+        type: string
+      lottery_start_at:
+        description: 开奖时间
+        type: string
+      min_unit:
+        description: 最小购买单位
+        type: integer
+      name:
+        description: 商品名称
+        type: string
+      price:
+        description: 售价
+        type: number
+      remain_unit:
+        description: 当前库存
+        type: integer
+      total_unit:
+        description: 总份数
+        type: integer
+      treasure_no:
+        description: 夺宝场次
+        type: integer
+      unit_price:
+        description: 每份售价
+        type: number
+    type: object
+  val.GetGoodsTreasurePoolResp:
+    properties:
+      cover_img:
+        description: 商品封面图
+        type: string
+      desc:
+        description: 商品描述
+        type: string
+      goods_category_id:
+        description: 商品分类
+        type: integer
+      goods_category_name:
+        description: 商品分类名称
+        type: string
+      goods_img:
+        description: 商品图片
+        items:
+          type: string
+        type: array
+      lottery_start_at:
+        description: 开奖时间
+        type: string
+      min_unit:
+        description: 最小购买单位
+        type: integer
+      name:
+        description: 商品名称
+        type: string
+      price:
+        description: 售价
+        type: number
+      remain_unit:
+        description: 当前库存
+        type: integer
+      status:
+        description: 状态(1:未开始;2:进行中;3:结束但未开奖;4:已开奖)
+        type: integer
+      total_unit:
+        description: 总份数
+        type: integer
+      treasure_no:
+        description: 夺宝场次
+        type: integer
+      unit_price:
+        description: 每份售价
+        type: number
+    type: object
+  val.GetLotteryGroupPurchaseRecordResp:
+    properties:
+      group_purchase_no:
+        description: 拼购场次
+        type: integer
+      is_lucky:
+        description: 是否中奖(1:否;2:是)
+        type: integer
+      lottery_no:
+        description: 抽奖编号
+        type: integer
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.GetLotteryTreasureLuckyRecordResp:
+    properties:
+      city:
+        description: 用户城市
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      head_image_url:
+        description: 用户头像
+        type: string
+      is_share:
+        description: 是否分享(0:未分享;1:已分享)
+        type: integer
+      lottery_no:
+        description: 抽奖编号
+        type: integer
+      nickname:
+        description: 用户昵称
+        type: string
+      treasure_no:
+        description: 夺宝场次
+        type: integer
+      unit:
+        description: 购买份数
+        type: integer
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.GetLotteryTreasureRecordResp:
+    properties:
+      is_lucky:
+        description: 是否中奖(1:否;2:是)
+        type: integer
+      lottery_no:
+        description: 抽奖编号
+        type: integer
+      treasure_no:
+        description: 夺宝场次
+        type: integer
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.GetOrderGroupPurchasesBuyRecordResp:
+    properties:
+      city:
+        description: 城市
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      group_purchase_no:
+        description: 夺宝场次
+        type: integer
+      head_image_url:
+        description: 用户头像
+        type: string
+      nickname:
+        description: 用户昵称
+        type: string
+      unit:
+        description: 购买份数
+        type: integer
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.GetShareResp:
+    properties:
+      city:
+        description: 城市
+        type: string
+      content:
+        description: 分享内容
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      head_image_url:
+        description: 用户头像
+        type: string
+      img:
+        description: 分享图片
+        items:
+          type: string
+        type: array
+      issue_no:
+        description: 期号
+        type: integer
+      issue_type:
+        description: 类型(1:夺宝;2:拼购)
+        type: integer
+      name:
+        description: 名称
+        type: string
+      nickname:
+        description: 用户昵称
+        type: string
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.GetSharesShowWithPageResp:
+    properties:
+      created_at:
+        description: 创建时间
+        type: string
+      head_image_url:
+        description: 用户头像
+        type: string
+      issue_type:
+        description: 类型(1:夺宝;2:拼购)
+        type: integer
+      name:
+        description: 名称
+        type: string
+      nickname:
+        description: 用户昵称
+        type: string
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.GetUserBuyRecordStatisticsResp:
+    properties:
+      lucky_num:
+        description: LuckyNum 中奖数
+        type: integer
+      total_num:
+        description: TotalNum 总数
+        type: integer
+    type: object
+  val.GetUserShareResp:
+    properties:
+      content:
+        description: 分享内容
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      img:
+        description: 分享图片
+        items:
+          type: string
+        type: array
+      issue_no:
+        description: 期号
+        type: integer
+      issue_type:
+        description: 类型(1:夺宝;2:拼购)
+        type: integer
+      name:
+        description: 名称
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 审核状态(1:待审核;2:审核拒绝;3:审核通过)
+        type: integer
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.GoodsGroupPurchasePoolBuyer:
+    properties:
+      head_image_url:
+        description: 用户头像
+        type: string
+      nickname:
+        description: 用户昵称
+        type: string
+    type: object
+  val.GoodsTreasurePoolEndedWithPageResp:
+    properties:
+      cover_img:
+        description: 商品封面图
+        type: string
+      head_image_url:
+        description: 用户头像
+        type: string
+      lottery_start_at:
+        description: 开奖时间
+        type: string
+      min_unit:
+        description: 最小购买单位
+        type: integer
+      name:
+        description: 商品名称
+        type: string
+      nickname:
+        description: 用户昵称
+        type: string
+      price:
+        description: 售价
+        type: number
+      status:
+        description: 状态(1:未开始;2:进行中;3:结束但未开奖;4:已开奖)
+        type: integer
+      total_unit:
+        description: 总份数
+        type: integer
+      treasure_no:
+        description: 夺宝场次
+        type: integer
+      unit_price:
+        description: 每份售价
+        type: number
+      user_id:
+        description: 用户ID
+        type: string
+    type: object
+  val.UploadImageResp:
+    properties:
+      url:
+        description: 图片存储 url 地址
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: '统一没有特殊说明的情况下规范说明：<br> 1. 没有特殊说明的情况下，返回数据格式均为`json` <br> 2. 返回 json
+    最外层均包含`code`和`message`字段 <br> 3. http code [200]: 正常；[400]: 请求参数错误；[401]: 当前请求无token或token过期；[500]:
+    服务器异常错误；'
+  license:
+    name: mission
+  title: shopping-goods 商品服务接口文档
+  version: "1.0"
+paths:
+  /goods/ads/all:
+    get:
+      description: 查询广告列表 全部
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 查询类型 1夺宝，2拼购，3用户中心
+        in: query
+        name: type
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/val.GetAdResp'
+                  type: array
+              type: object
+      summary: 查询广告列表 全部
+      tags:
+      - 广告
+  /goods/browsing-history/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加场次浏览记录
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 添加场次浏览记录
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/val.AddGoodsBrowsingHistoryReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httper.RespBody'
+      summary: 添加场次浏览记录
+      tags:
+      - 商品浏览记录
+  /goods/browsing-history/page:
+    get:
+      description: 查询场次浏览记录分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      - description: 商品夺宝场次
+        in: query
+        name: treasure_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetGoodsBrowsingHistoryWithPageResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询场次浏览记录分页
+      tags:
+      - 商品浏览记录
+  /goods/buy-record/page:
+    get:
+      description: 查询用户购买记录 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      - description: 查询类型 1夺宝全部，2夺宝中奖，3拼购全部，4拼购中奖
+        in: query
+        name: type
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/pager.PageModel'
+              type: object
+      summary: 查询用户购买记录 分页
+      tags:
+      - 用户购买记录
+  /goods/buy-record/statistics:
+    get:
+      consumes:
+      - application/json
+      description: 查询用户购买记录统计信息
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.GetUserBuyRecordStatisticsResp'
+              type: object
+      summary: 查询用户购买记录统计信息
+      tags:
+      - 用户购买记录
+  /goods/group-purchase-buy-record/page:
+    get:
+      description: 查询商品拼购购买记录 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      - description: 商品拼购场次
+        in: query
+        name: group_purchase_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetOrderGroupPurchasesBuyRecordResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询商品拼购购买记录 分页
+      tags:
+      - 商品拼购
+  /goods/group-purchase-processing/page:
+    get:
+      description: 查询商品拼购池进行中的列表 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      - description: 拼购人数
+        in: query
+        name: purchaser_num
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetGoodsGroupPurchasePoolProcessingWithPageResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询商品拼购池进行中的列表 分页
+      tags:
+      - 商品拼购
+  /goods/group-purchase/detail:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品拼购池详情信息 单个
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 商品拼购场次
+        in: query
+        name: group_purchase_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.GetGoodsGroupPurchasePoolDetailResp'
+              type: object
+      summary: 查询商品拼购池详情信息 单个
+      tags:
+      - 商品拼购
+  /goods/group-purchase/info:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品拼购池 单个
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 商品拼购场次
+        in: query
+        name: group_purchase_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.GetGoodsGroupPurchasePoolResp'
+              type: object
+      summary: 查询商品拼购池 单个
+      tags:
+      - 商品拼购
+  /goods/group-purchase/label:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品拼购池标签
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.GetGoodsGroupPurchasePoolLabelResp'
+              type: object
+      summary: 查询商品拼购池标签
+      tags:
+      - 商品拼购
+  /goods/group-purchase/lucky-info:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品拼购中奖信息 单个
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 商品拼购场次
+        in: query
+        name: group_purchase_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.GetLotteryTreasureLuckyRecordResp'
+              type: object
+      summary: 查询商品拼购中奖信息 单个
+      tags:
+      - 商品拼购
+  /goods/group-purchase/user-buy-record:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品拼购当前用户购买记录 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      - description: 商品拼购场次
+        in: query
+        name: group_purchase_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetLotteryGroupPurchaseRecordResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询商品拼购当前用户购买记录 分页
+      tags:
+      - 商品拼购
+  /goods/latest-processing-issue-no:
+    get:
+      description: 商品池最新进行中的期号
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 期号
+        in: query
+        name: issue_no
+        required: true
+        type: integer
+      - description: 类型(1:夺宝;2:拼购)
+        in: query
+        name: issue_type
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.GetGoodsLatestProcessingIssueNoResp'
+              type: object
+      summary: 商品池最新进行中的期号
+      tags:
+      - 商品池
+  /goods/share/page:
+    get:
+      description: 查询晒单分享列表 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetShareResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询晒单分享列表 分页
+      tags:
+      - 晒单分享
+  /goods/share/show-page:
+    get:
+      description: 查询晒单分享轮播列表 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      - description: 类型(1:夺宝;2:拼购)
+        in: query
+        name: issue_type
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetSharesShowWithPageResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询晒单分享轮播列表 分页
+      tags:
+      - 晒单分享
+  /goods/treasure-buy-record/page:
+    get:
+      description: 查询商品夺宝购买记录 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      - description: 商品夺宝场次
+        in: query
+        name: treasure_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetGoodsTreasurePoolBuyRecordResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询商品夺宝购买记录 分页
+      tags:
+      - 商品夺宝
+  /goods/treasure-ended/page:
+    get:
+      description: 查询商品夺宝已结束列表 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GoodsTreasurePoolEndedWithPageResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询商品夺宝已结束列表 分页
+      tags:
+      - 商品夺宝
+  /goods/treasure-processing/page:
+    get:
+      description: 查询商品夺宝进行中的列表 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetGoodsTreasurePoolProcessingWithPageResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询商品夺宝进行中的列表 分页
+      tags:
+      - 商品夺宝
+  /goods/treasure/detail:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品夺宝详情信息 单个
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 商品夺宝场次
+        in: query
+        name: treasure_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.GetGoodsTreasurePoolDetailResp'
+              type: object
+      summary: 查询商品夺宝详情信息 单个
+      tags:
+      - 商品夺宝
+  /goods/treasure/info:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品夺宝信息 单个
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 商品夺宝场次
+        in: query
+        name: treasure_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.GetGoodsTreasurePoolResp'
+              type: object
+      summary: 查询商品夺宝信息 单个
+      tags:
+      - 商品夺宝
+  /goods/treasure/lucky-info:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品夺宝中奖信息 单个
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        type: string
+      - description: 商品夺宝场次
+        in: query
+        name: treasure_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.GetLotteryTreasureLuckyRecordResp'
+              type: object
+      summary: 查询商品夺宝中奖信息 单个
+      tags:
+      - 商品夺宝
+  /goods/treasure/user-buy-record:
+    get:
+      consumes:
+      - application/json
+      description: 查询商品夺宝当前用户购买记录 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      - description: 商品夺宝场次
+        in: query
+        name: treasure_no
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetLotteryTreasureRecordResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询商品夺宝当前用户购买记录 分页
+      tags:
+      - 商品夺宝
+  /goods/user-share/add:
+    post:
+      consumes:
+      - application/json
+      description: 新增晒单分享
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 晒单分享
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/val.AddShareReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httper.RespBody'
+      summary: 新增晒单分享
+      tags:
+      - 晒单分享
+  /goods/user-share/file-upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 晒单分享上传图片
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 图片文件
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/val.UploadImageResp'
+              type: object
+      summary: 晒单分享上传图片
+      tags:
+      - 晒单分享
+  /goods/user-share/page:
+    get:
+      description: 查询用户的晒单分享列表 分页
+      parameters:
+      - description: access-token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 页码 默认为1
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小 默认为10
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/httper.RespBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/pager.PageModel'
+                  - properties:
+                      records:
+                        items:
+                          $ref: '#/definitions/val.GetUserShareResp'
+                        type: array
+                    type: object
+              type: object
+      summary: 查询用户的晒单分享列表 分页
+      tags:
+      - 晒单分享
+swagger: "2.0"
