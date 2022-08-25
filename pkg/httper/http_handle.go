@@ -1,11 +1,11 @@
 package httper
 
 import (
-	"alcohol-all/pkg/logger"
-	"alcohol-all/pkg/mistake"
-	"alcohol-all/pkg/validation"
 	"errors"
 	"net/http"
+	"template/pkg/logger"
+	"template/pkg/mistake"
+	"template/pkg/validation"
 
 	"github.com/gin-gonic/gin"
 	"repo.wooramel.cn/mission/tools/str"

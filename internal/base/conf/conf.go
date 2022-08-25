@@ -13,7 +13,6 @@ type Conf struct {
 	Logger Logger
 	Repo   Repo
 	Redis  Redis
-	S3     S3
 }
 
 // Base 基本配置，包括相关端口号地址等
@@ -47,13 +46,4 @@ type Redis struct {
 	Connection string // Data Source Name
 	Username   string
 	Password   string
-}
-
-type S3 struct {
-	AK       string
-	SK       string
-	Region   string
-	Endpoint string
-	Bucket   string
-	VisitURL string
 }

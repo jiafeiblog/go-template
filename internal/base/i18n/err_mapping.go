@@ -1,6 +1,6 @@
 package i18n
 
-import "repo.wooramel.cn/rapeh/shopping-component-base/pkg/mistake"
+import "template/pkg/mistake"
 
 const (
 	// ErrFailedToCreateOrder 创建订单失败
@@ -18,5 +18,4 @@ func init() {
 	mistake.RegisterCodeErrorInfo(ErrUploadImage, "upload image failed")
 	mistake.RegisterCodeErrorInfo(ErrUploadImageFormat, "upload image format failed")
 	mistake.RegisterCodeErrorInfo(ErrOrderShared, "already shared")
-
 }

@@ -1,10 +1,10 @@
 package router
 
 import (
-	"alcohol-all/pkg/logger"
-	"alcohol-all/pkg/middleware"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"template/pkg/logger"
+	"template/pkg/middleware"
 )
 
 // InitWebRouter 初始化路由 唯一一个会阻塞的初始化动作，请放置在最后

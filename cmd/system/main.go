@@ -1,16 +1,16 @@
 package main
 
 import (
-	"alcohol-all/internal/base/conf"
-	"alcohol-all/internal/base/router"
-	"alcohol-all/pkg/cache"
-	"alcohol-all/pkg/config"
-	"alcohol-all/pkg/db"
-	"alcohol-all/pkg/logger"
 	"flag"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"os"
+	"template/internal/base/conf"
+	"template/internal/base/router"
+	"template/pkg/cache"
+	"template/pkg/config"
+	"template/pkg/db"
+	"template/pkg/logger"
 	"time"
 )
 
